@@ -2,8 +2,14 @@ const bbt = require('big-bang-theory');
 let check = new Boolean(false);
 let array = new Array();
 
-
 const seasons = (req, res) => {
+array = []
+if(req.params.index>12 || req.params.index<0) {
+    res.status(200).json({
+        success: false,
+        index: req.params.index,
+    })
+}
  for(let i = 0; i <279; i++) {
    if(bbt._embedded.episodes[i].season == req.params.index) {
     array.push(bbt._embedded.episodes[i]);
@@ -16,12 +22,6 @@ const seasons = (req, res) => {
         index: req.params.index,
         data: array,
       })
- }else{
-   res.status(200).json({
-     success: false,
-     index: req.params.index,
-     message: "Not a season"
-   })
  }
 
 
